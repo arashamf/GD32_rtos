@@ -1,0 +1,30 @@
+{
+    "configurations": 
+    [
+        {
+            "name": "ARM",
+            "compilerPath": "arm-none-eabi-gcc",
+            "includePath": 
+            [
+                "${workspaceRoot}/**",
+                "${workspaceRoot}/App/Include",
+                "${workspaceRoot}/Drivers/Core/CMSIS",
+                "${workspaceRoot}/Drivers/Core/CMSIS/GD/GD32F30x/Include",
+                "${workspaceRoot}/Drivers/GD32F30x_standard_peripheral/Include",
+                "${workspaceRoot}/FreeRTOS-Kernel/include"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-x64",
+            "browse":
+            {
+                "limitSymbolsToIncludedHeaders": false
+            },
+            "defines": [
+                "_RTE_", 
+                "USE_FULL_ASSERT"
+            ]
+        }
+    ],
+    "version": 4
+}
