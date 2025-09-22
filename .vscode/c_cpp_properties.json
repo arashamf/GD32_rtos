@@ -8,10 +8,12 @@
             [
                 "${workspaceRoot}/**",
                 "${workspaceRoot}/App/Include",
+                "${workspaceRoot}/Drivers/display",
                 "${workspaceRoot}/Drivers/Core/CMSIS",
-                "${workspaceRoot}/Drivers/Core/CMSIS/GD/GD32F30x/Include",
+                "${workspaceRoot}/Drivers/Core/Include",
                 "${workspaceRoot}/Drivers/GD32F30x_standard_peripheral/Include",
-                "${workspaceRoot}/FreeRTOS-Kernel/include"
+                "${workspaceRoot}/FreeRTOS-Kernel/include",
+                "${workspaceRoot}/FreeRTOS-Kernel/portable/GCC/ARM_CM4F"
             ],
             "cStandard": "c11",
             "cppStandard": "c++17",

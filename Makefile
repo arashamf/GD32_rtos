@@ -49,9 +49,6 @@ C_INCLUDES += 	$(APP_PATH_INC)
 C_INCLUDES +=	$(LEDDriver_PATH)
 
 # ASM sources
-#ASM_SOURCES =  \
-#$(GD32F3_CORE_INC_DIR)/startup_gd32f303x_hd.s
-
 ASM_SOURCES = 
 
 # include sub makefiles
@@ -117,18 +114,18 @@ AS_INCLUDES =
 # include directories
 C_INCLUDES =  \
 -I $(APP_PATH_INC) \
+-I $(LEDDriver_PATH) \
 -I $(GD32F3_INC_DEVICE_DIR) \
 -I $(GD32F3_CORE_INC_DIR) \
 -I $(GD32F3_INC_STDLIB) \
--I $(LEDDriver_PATH) \
 -I $(FREERTOS_INC_DIR) \
 -I $(FREERTOS_ARM_CM4_DIR)
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
 
-CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
-#CFLAGS = $(MCU) $(C_DEFS) $(INC_DIR) $(OPT) -Wall -fdata-sections -ffunction-sections
+#CFLAGS = $(MCU) $(C_DEFS) $(C_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
+CFLAGS = $(MCU) $(C_DEFS) $(OPT) -Wall -fdata-sections -ffunction-sections
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2 -std=gnu99
@@ -167,7 +164,8 @@ OBJECTS += $(addprefix $(BUILD_DIR)/,$(notdir $(ASM_SOURCES:.s=.o)))
 vpath %.s $(sort $(dir $(ASM_SOURCES)))
 
 $(BUILD_DIR)/%.o: %.c Makefile | $(BUILD_DIR) 
-	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+#	$(CC) -c $(CFLAGS) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
+	$(CC) -c $(CFLAGS) -I . $(INC_DIR) -Wa,-a,-ad,-alms=$(BUILD_DIR)/$(notdir $(<:.c=.lst)) $< -o $@
 
 $(BUILD_DIR)/%.o: %.s Makefile | $(BUILD_DIR)
 	$(AS) -c $(CFLAGS) $< -o $@
