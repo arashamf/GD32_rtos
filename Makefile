@@ -48,16 +48,17 @@ C_INCLUDES =  	$(ROOT_DIR)
 C_INCLUDES += 	$(APP_PATH_INC)
 C_INCLUDES +=	$(LEDDriver_PATH)
 
+# ASM sources
+#ASM_SOURCES =  \
+#$(GD32F3_CORE_INC_DIR)/startup_gd32f303x_hd.s
+
+ASM_SOURCES = 
+
 # include sub makefiles
 include makefile_std_lib.mk   # GD32 Standard Peripheral Library
 include makefile_freertos.mk  # freertos source
 
 INC_DIR  = $(patsubst %, -I%, $(C_INCLUDES))
-
-# ASM sources
-ASM_SOURCES =  \
-$(ROOT_DIR)/Drivers/Core/CMSIS/startup_gd32f303x_hd.s
-
 
 #######################################
 # binaries
@@ -115,13 +116,13 @@ AS_INCLUDES =
 
 # include directories
 C_INCLUDES =  \
--I App/Include \
--I Drivers/GD32F30x_standard_peripheral/Include \
--I Drivers/Core/CMSIS \
--I Drivers/Core/CMSIS/GD/GD32F30x/Include \
--I Drivers/display \
--I FreeRTOS-Kernel/include \
--I FreeRTOS-Kernel/portable/GCC/ARM_CM4F 
+-I $(APP_PATH_INC) \
+-I $(GD32F3_INC_DEVICE_DIR) \
+-I $(GD32F3_CORE_INC_DIR) \
+-I $(GD32F3_INC_STDLIB) \
+-I $(LEDDriver_PATH) \
+-I $(FREERTOS_INC_DIR) \
+-I $(FREERTOS_ARM_CM4_DIR)
 
 # compile gcc flags
 ASFLAGS = $(MCU) $(AS_DEFS) $(AS_INCLUDES) $(OPT) -Wall -fdata-sections -ffunction-sections
@@ -204,7 +205,21 @@ clean:
 #######################################
 # prog
 #######################################
+GD32 = 1
+ifeq ($(GD32), 1)
+	MK = gd32f30x
+else
+	MK = stm32f4x
+endif
+
+CMSIS_DAP = 0
+ifeq ($(CMSIS_DAP), 1)
+	OCD_INTER = cmsis-dap
+else
+	OCD_INTER = stlink
+endif
+
 prog: $(BUILD_DIR)/$(TARGET).elf
-	openocd -f interface/cmsis-dap.cfg -f target/stm32f4x.cfg -c "program build/$(TARGET).elf verify exit reset"
+	openocd -f  interface/$(OCD_INTER).cfg -f target/$(MK).cfg -c "program build/$(TARGET).elf verify exit reset"
 
 # *** EOF ***

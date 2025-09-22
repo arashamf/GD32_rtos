@@ -136,4 +136,7 @@
 #define INCLUDE_xTaskGetHandle                 1
 #define INCLUDE_xTaskResumeFromISR             1
 
+#define xPortPendSVHandler 	PendSV_Handler
+#define vPortSVCHandler 	SVC_Handler
+
 #endif /* FREERTOS_CONFIG_H */

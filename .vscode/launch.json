@@ -14,8 +14,8 @@
             "svdFile": "${workspaceRoot}/GD32F3x0.svd", // Add you svd file            
             "configFiles": // Set you programmer and target controller
             [
-                "interface/cmsis-dap.cfg",
-                "target/stm32f4x.cfg"
+                "interface/stlink.cfg",
+                "target/gd32f30x.cfg"
             ],
             "runToEntryPoint": "main",
             "showDevDebugOutput": "none",

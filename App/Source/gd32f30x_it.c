@@ -109,9 +109,9 @@ void UsageFault_Handler(void)
     \param[out] none
     \retval     none
 */
-void SVC_Handler(void)
+/*void SVC_Handler(void)
 {
-}
+}*/
 
 /*!
     \brief      this function handles DebugMon exception
@@ -129,9 +129,9 @@ void DebugMon_Handler(void)
     \param[out] none
     \retval     none
 */
-void PendSV_Handler(void)
+/*void PendSV_Handler(void)
 {
-}
+}*/
 
 /*!
     \brief      this function handles SysTick exception

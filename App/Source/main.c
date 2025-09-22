@@ -26,7 +26,7 @@
 
 //---------------------------------------------------------------------------//
 FlagStatus sw_led = SET;
-TaskHandle_t ComTask_Handler;
+TaskHandle_t ComTask_Handler=NULL;
 void start_task(void *pvParameters);
 
 //---------------------------------------------------------------------------//
@@ -34,7 +34,7 @@ void adc_config(void);
 void jump_to_app(uint32_t addr);
 
 /*-----------------------------------------------------------*/
-
+void start_task(void *pvParameters);
 static void exampleTask( void * parameters );
 
 /*-----------------------------------------------------------*/
@@ -71,7 +71,7 @@ int main(void)
     usart0_config();
     dma_config();
     spi0_config();
-    OLED_init();
+//    OLED_init();
     timer_delay_init ();
 
     rcu_ckout0_config(RCU_CKOUT0SRC_CKSYS); //вывод системной частоты на вывод MCO
@@ -136,61 +136,6 @@ int _read(int fd, char *pBuffer, int size) {
         pBuffer[i] = usart_data_receive(USART0);
     }
     return size;
-}
-
-extern int  _end;
-
-//---------------------------------------------------------------------------//
-caddr_t _sbrk ( int incr )
-{
-    static unsigned char *heap = NULL;
-    unsigned char *prev_heap;
-
-    if (heap == NULL) {
-        heap = (unsigned char *)&_end;
-    }
-    prev_heap = heap;
-
-    heap += incr;
-
-    return (caddr_t) prev_heap;
-}
-
-//---------------------------------------------------------------------------//
-int link(char *old, char *new) {
-    return -1;
-}
-
-//---------------------------------------------------------------------------//
-int _close(int file)
-{
-    return -1;
-}
-
-//---------------------------------------------------------------------------//
-int _fstat(int file, struct stat *st)
-{
-    //st->st_mode = S_IFCHR;
-    return 0;
-}
-
-//---------------------------------------------------------------------------//
-int _isatty(int file)
-{
-    return 1;
-}
-
-//---------------------------------------------------------------------------//
-int _lseek(int file, int ptr, int dir)
-{
-    return 0;
-}
-
-//---------------------------------------------------------------------------//
-void abort(void)
-{
-    /* Abort called */
-    while(1);
 }
 
 /***************************************************************************************/
