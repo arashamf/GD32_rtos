@@ -30,20 +30,20 @@
 #define FREERTOS_CONFIG_H
 
 //#define xPortSysTickHandler SysTick_Handler
-//#define xPortPendSVHandler PendSV_Handler
-//#define vPortSVCHandler SVC_Handler
+#define xPortPendSVHandler PendSV_Handler
+#define vPortSVCHandler SVC_Handler
 
 /******************************************************************************/
 /* Hardware description related definitions. **********************************/
 /******************************************************************************/
 
-#define configCPU_CLOCK_HZ    ( ( unsigned long ) 12000000 )
+#define configCPU_CLOCK_HZ    ( ( unsigned long ) 120000000 )
 
 /******************************************************************************/
 /* Scheduling behaviour related definitions. **********************************/
 /******************************************************************************/
 
-#define configTICK_RATE_HZ                         ( 100U )
+#define configTICK_RATE_HZ                        ( ( portTickType ) 1000 )
 #define configUSE_PREEMPTION                       1
 #define configUSE_TIME_SLICING                     1
 #define configUSE_PORT_OPTIMISED_TASK_SELECTION    0
@@ -76,7 +76,7 @@
 
 #define configSUPPORT_STATIC_ALLOCATION              0
 #define configSUPPORT_DYNAMIC_ALLOCATION             1
-#define configTOTAL_HEAP_SIZE                        4096U
+#define configTOTAL_HEAP_SIZE                        (( size_t )(16*1024))
 #define configAPPLICATION_ALLOCATED_HEAP             0
 #define configSTACK_ALLOCATION_FROM_SEPARATE_HEAP    0
 #define configUSE_MINI_LIST_ITEM                     0
@@ -85,8 +85,8 @@
 /* Interrupt nesting behaviour configuration. *********************************/
 /******************************************************************************/
 
-#define configKERNEL_INTERRUPT_PRIORITY          0U
-#define configMAX_SYSCALL_INTERRUPT_PRIORITY     0U
+#define configKERNEL_INTERRUPT_PRIORITY          0xFF
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY     0x7F
 #define configMAX_API_CALL_INTERRUPT_PRIORITY    0U
 
 /******************************************************************************/
@@ -135,8 +135,5 @@
 #define INCLUDE_xTaskAbortDelay                1
 #define INCLUDE_xTaskGetHandle                 1
 #define INCLUDE_xTaskResumeFromISR             1
-
-#define xPortPendSVHandler 	PendSV_Handler
-#define vPortSVCHandler 	SVC_Handler
 
 #endif /* FREERTOS_CONFIG_H */

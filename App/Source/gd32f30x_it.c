@@ -41,6 +41,9 @@ OF SUCH DAMAGE.
 #include "tim.h"
 #include "spi.h"
 
+// Private function prototypes -----------------------------------------------//
+extern void xPortSysTickHandler(void); 
+
 /*!
     \brief      this function handles NMI exception
     \param[in]  none
@@ -103,15 +106,28 @@ void UsageFault_Handler(void)
     }
 }
 
+#if 0
 /*!
     \brief      this function handles SVC exception
     \param[in]  none
     \param[out] none
     \retval     none
 */
-/*void SVC_Handler(void)
+void SVC_Handler(void)
 {
-}*/
+}
+
+/*!
+    \brief      this function handles PendSV exception
+    \param[in]  none
+    \param[out] none
+    \retval     none
+*/
+void PendSV_Handler(void)
+{
+}
+
+#endif
 
 /*!
     \brief      this function handles DebugMon exception
@@ -124,16 +140,6 @@ void DebugMon_Handler(void)
 }
 
 /*!
-    \brief      this function handles PendSV exception
-    \param[in]  none
-    \param[out] none
-    \retval     none
-*/
-/*void PendSV_Handler(void)
-{
-}*/
-
-/*!
     \brief      this function handles SysTick exception
     \param[in]  none
     \param[out] none
@@ -141,7 +147,7 @@ void DebugMon_Handler(void)
 */
 void SysTick_Handler(void)
 {
-    delay_decrement();
+    //delay_decrement();
 	 #if (INCLUDE_xTaskGetSchedulerState  == 1 )
       if (xTaskGetSchedulerState() != taskSCHEDULER_NOT_STARTED)
       {

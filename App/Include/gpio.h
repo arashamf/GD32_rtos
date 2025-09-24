@@ -21,8 +21,8 @@ extern "C" {
 #define LED_PORT            	GPIOB
 #define LED_Pin             	GPIO_PIN_2
 
-#define DISP_GPIO_RCU       	RCU_GPIOA
-#define DISP_GPIO_Port      	GPIOA
+#define LCD_GPIO_RCU       	    RCU_GPIOA
+#define LCD_GPIO_Port      	    GPIOA
 #define RST_Pin             	GPIO_PIN_2
 #define DC_Pin              	GPIO_PIN_3
 #define CS_Pin              	GPIO_PIN_1
@@ -56,17 +56,17 @@ extern "C" {
 
 #define LED(x)  ((x) ? (gpio_bit_set(LED_PORT, LED_Pin)) : (gpio_bit_reset(LED_PORT, LED_Pin)))
 #define TOOGLE_LED() (LED(!(gpio_output_bit_get(LED_PORT, LED_Pin))))
-#define LCD_CS(x) ((x) ? (gpio_bit_reset(DISP_GPIO_Port, CS_Pin)) : (gpio_bit_set(DISP_GPIO_Port, CS_Pin)))
-#define LCD_DC(x) ((x) ? (gpio_bit_set(DISP_GPIO_Port, DC_Pin)) : (gpio_bit_reset(DISP_GPIO_Port, DC_Pin)))
-#define LCD_RST(x) ((x) ? (gpio_bit_set(DISP_GPIO_Port, RST_Pin)) : (gpio_bit_reset(DISP_GPIO_Port, RST_Pin)))
 
-#define ON      1
-#define OFF     0
+#define LCD_CS(x) ((x) ? (gpio_bit_reset(LCD_GPIO_Port, CS_Pin)) : (gpio_bit_set(LCD_GPIO_Port, CS_Pin)))
+#define LCD_DC(x) ((x) ? (gpio_bit_set(LCD_GPIO_Port, DC_Pin)) : (gpio_bit_reset(LCD_GPIO_Port, DC_Pin)))
+#define LCD_RST(x) ((x) ? (gpio_bit_set(LCD_GPIO_Port, RST_Pin)) : (gpio_bit_reset(LCD_GPIO_Port, RST_Pin)))
 
 //--------------------------------------------------------------------------------//
 void gpio_config(void);
 void SPI0_gpio_init (void);
 void SPI1_gpio_init (void);
+void LCD_gpio_init (void);
+void W5500_gpio_init (void);
 void I2C_gpio_config(void);
 void ENC_gpio_init (void);
 void usart0_gpio_init (void);

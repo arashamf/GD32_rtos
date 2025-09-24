@@ -29,26 +29,29 @@ void OLED_ClearBuffer(uint8_t value)
 //-----------------------------------------------------------------------------//
 void OLED_SendCommand(uint8_t command)
 {
+	#ifdef      LCD_ON
 	LCD_CS(ON);
 	LCD_DC(OFF);
 	spi_write_byte (command);
 	LCD_CS(OFF);
+	#endif
 }
 
 //-----------------------------------------------------------------------------//
 void OLED_SendData(uint8_t data)
 {
+	#ifdef      LCD_ON
 	LCD_CS(ON);
-	//for (uint16_t count=0; count < 0xFFF; count++) {}
-	//GPIO_OCTL(DISP_GPIO_Port) |= ((uint32_t)DC_Pin);
 	LCD_DC(ON);
 	spi_write_byte (data);
 	LCD_CS(OFF);
+	#endif
 }
 
 //-----------------------------------------------------------------------------//
 void OLED_SendBuff(uint8_t * buf, uint8_t count)
 {
+	#ifdef      LCD_ON
 	LCD_CS(ON);
 	for (uint8_t count = 0; count < 0xFF; count++) {}
 	LCD_DC(ON);
@@ -57,6 +60,7 @@ void OLED_SendBuff(uint8_t * buf, uint8_t count)
 		spi_write_byte (*(buf + i));
 	}
 	LCD_CS(OFF);
+	#endif
 }
 
 //-----------------------------------------------------------------------------//

@@ -107,12 +107,8 @@ C_DEFS =  \
 # AS includes
 AS_INCLUDES = 
 
-# C includes
-#TOP=$(shell pwd)
-#INC_FLAGS = -I$(TOP)/FreeRTOS-Kernel
-
 # include directories
-C_INCLUDES =  \
+#C_INCLUDES =  \
 -I $(APP_PATH_INC) \
 -I $(LEDDriver_PATH) \
 -I $(GD32F3_INC_DEVICE_DIR) \

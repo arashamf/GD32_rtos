@@ -6,6 +6,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "spi.h"
+#include "hw_config.h"
 #include "tim.h"
 #include "OLED.h"
 #include "typedef.h"
@@ -35,22 +36,6 @@ void jump_to_app(uint32_t addr);
 
 /*-----------------------------------------------------------*/
 void start_task(void *pvParameters);
-static void exampleTask( void * parameters );
-
-/*-----------------------------------------------------------*/
-
-static void exampleTask( void * parameters )
-{
-    /* Unused parameters. */
-    ( void ) parameters;
-
-    for( ; ; )
-    {
-        /* Example Task Code */
-        vTaskDelay( 100 ); /* delay 100 ticks */
-    }
-}
-
 
 //---------------------------------------------------------------------------//
 int main(void) 
@@ -70,21 +55,21 @@ int main(void)
     gpio_config();
     usart0_config();
     dma_config();
-    spi0_config();
-//    OLED_init();
+    #ifdef      LCD_ON
+    LCD_SPI_config();
+    OLED_init();
+    #endif
     timer_delay_init ();
 
     rcu_ckout0_config(RCU_CKOUT0SRC_CKSYS); //вывод системной частоты на вывод MCO
-
-	/*FontSet(Segoe_UI_Eng_12);
+    #ifdef      LCD_ON
+	FontSet(Segoe_UI_Eng_12);
     snprintf(lcd_buf, 20,"enc_count=%ld", enc_count);
     OLED_DrawStr(lcd_buf, 5, 5);	
-    OLED_UpdScreen_DMA();*/
-
+    OLED_UpdScreen_DMA();
+    #endif
     xTaskCreate((TaskFunction_t )start_task, (const char*)"com_task",  (uint16_t)COM_STK_SIZE, (void* )NULL, (UBaseType_t)COM_TASK_PRIO,	(TaskHandle_t*)&ComTask_Handler);
-
     vTaskStartScheduler();
-
     LED(ON);
 
     while (1) 
@@ -105,7 +90,7 @@ void start_task(void *pvParameters)
     for(;;)
     {
      TOOGLE_LED();
-      vTaskDelay(5000);
+      vTaskDelay(2000);
     }
 }
 
